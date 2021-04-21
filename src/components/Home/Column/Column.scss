@@ -1,0 +1,48 @@
+.column {
+  background-color: #ebecf0;
+  width: 272px;
+  border-radius: 3px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  position: relative;
+  white-space: normal;
+  padding: 8px;
+  color: #5e6c84;
+  &__top {
+    display: flex;
+    justify-content: space-between;
+    height: fit-content;
+    align-items: center;
+    &__name {
+      border: 0;
+      color: #263959;
+      background-color: transparent;
+      overflow: hidden;
+      overflow-wrap: break-word;
+      height: fit-content;
+      resize: none;
+      &:hover {
+        cursor: pointer;
+      }
+      &:focus {
+        background-color: white;
+        cursor: text;
+      }
+    }
+    &__delete {
+      border: 0;
+      color: #263959;
+      background-color: transparent;
+      &:hover {
+        cursor: pointer;
+        background-color: rgba(9, 30, 66, 0.08);
+      }
+    }
+  }
+  &__add-card {
+    background-color: transparent;
+    border: 0;
+  }
+}

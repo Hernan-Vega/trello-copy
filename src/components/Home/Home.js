@@ -1,5 +1,7 @@
+import { ColumnList } from './ColumnList/ColumnList';
+
 const Home = () => {
-  return <div>Hello World</div>;
+  return <ColumnList />;
 };
 
 export { Home };

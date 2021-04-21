@@ -4,7 +4,7 @@
   "tabWidth": 2,
   "useTabs": false,
   "printWidth": 80,
-  "endOfLine": "lf",
+  "endOfLine": "auto",
   "trailingComma": "all",
   "arrowParens": "always",
   "jsxBracketSameLine": false

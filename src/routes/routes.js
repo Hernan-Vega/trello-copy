@@ -1,8 +1,8 @@
-import { Home } from 'components/Home';
+import HomePage from 'pages/HomePage';
 
 export const routes = [
   {
-    children: <Home />,
+    children: <HomePage />,
     key: 'home',
     name: 'Home',
     path: '/',
