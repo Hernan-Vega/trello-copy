@@ -4,8 +4,8 @@ import icondelete from '../../../assets/icondelete.svg';
 
 const Card = ({ title, id, handleChange }) => {
   return (
-    <li id={id} className="card">
-      <div className="card__text">
+    <li id={id}>
+      <div className="card">
         <textarea disabled>{title}</textarea>
         <button type="button">
           <img src={iconedit} alt="edit" />

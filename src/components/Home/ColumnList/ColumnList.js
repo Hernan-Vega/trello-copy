@@ -1,6 +1,7 @@
 import { Column } from '../Column/Column';
 import './ColumnList.scss';
 import iconplus from '../../../assets/iconplus.svg';
+import React, { useState } from 'react';
 
 /* eslint-disable no-param-reassign */
 
@@ -29,6 +30,8 @@ const ColumnList = () => {
     },
   ];
 
+  const handleClickNewList = () => {};
+
   const handleChange = (event) => {
     event.target.style.height = '';
     event.target.style.height = `calc(${event.target.scrollHeight}px - 4px)`;
@@ -43,8 +46,10 @@ const ColumnList = () => {
       ))}
       <li>
         <div className="column-list__add-list">
-          <img src={iconplus} alt="add" />
-          <textarea onChange={handleChange}>Add list</textarea>
+          <button type="button" onClick={handleClickNewList}>
+            <img src={iconplus} alt="add" />
+            Add list
+          </button>
         </div>
       </li>
     </ul>
