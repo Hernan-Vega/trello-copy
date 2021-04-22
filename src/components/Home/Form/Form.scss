@@ -1,0 +1,56 @@
+.form {
+  background-color: #ebecf0;
+  border-radius: 3px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  white-space: normal;
+  color: #5e6c84;
+  height: fit-content;
+  align-items: center;
+  width: 280px;
+  height: fit-content;
+  padding: 6px;
+  textarea {
+    color: #263959;
+    background-color: white;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    height: 24px;
+    width: 260px;
+    resize: none;
+    font-size: 14px;
+    line-height: 24px;
+    font-family: sans-serif;
+    border: 0;
+    padding: 2px 6px;
+    &:focus {
+      border: 3px solid #0079bf;
+      border-radius: 5px;
+    }
+  }
+  &__buttons {
+    height: 28px;
+    width: 280px;
+    display: flex;
+    button {
+      height: 28px;
+      margin: 4px;
+      border: 0;
+      :hover {
+        cursor: pointer;
+      }
+    }
+    &__confirm {
+      background-color: #5aac44;
+      color: white;
+      border-radius: 3px;
+      width: 80px;
+    }
+    img {
+      height: 16px;
+      opacity: 0.5;
+    }
+  }
+}

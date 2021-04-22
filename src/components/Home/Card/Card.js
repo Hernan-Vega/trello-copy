@@ -2,7 +2,7 @@ import './Cards.scss';
 import iconedit from '../../../assets/iconedit.svg';
 import icondelete from '../../../assets/icondelete.svg';
 
-const Card = ({ title, id, handleChange }) => {
+const Card = ({ title, id, handleResize }) => {
   return (
     <li id={id}>
       <div className="card">
