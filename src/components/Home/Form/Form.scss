@@ -1,4 +1,73 @@
-.form {
+.add-column,
+.add-card {
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 8px;
+  background-color: #7ba5dd;
+  border-radius: 3px;
+  border: 0;
+  overflow: hidden;
+  overflow-wrap: break-word;
+}
+.add-column {
+  width: 280px;
+  color: white;
+  font-size: 14px;
+  line-height: 24px;
+  font-family: sans-serif;
+  padding: 0 8px;
+  img {
+    height: 24px;
+    opacity: 0.4;
+  }
+  &:hover {
+    cursor: pointer;
+    background-color: #b5c5da;
+  }
+}
+.add-card {
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  height: fit-content;
+  width: 264px;
+  margin: 10px;
+  padding: 8px;
+  border-radius: 5px;
+  &:hover {
+    cursor: pointer;
+    background-color: rgba(9, 30, 66, 0.08);
+  }
+  img {
+    height: 24px;
+    opacity: 0.4;
+  }
+  button {
+    display: flex;
+    align-items: center;
+    border: 0;
+    color: #263959;
+    background-color: transparent;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    resize: none;
+    font-size: 16px;
+    height: 24px;
+    line-height: 24px;
+    font-family: sans-serif;
+    padding: 8px 10px;
+    width: 260px;
+    opacity: 0.75;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.form-column,
+.form-card {
   background-color: #ebecf0;
   border-radius: 3px;
   box-sizing: border-box;
@@ -28,7 +97,7 @@
     padding: 4px;
     margin-top: 4px;
   }
-  &__buttons {
+  .buttons {
     height: 28px;
     width: 280px;
     display: flex;

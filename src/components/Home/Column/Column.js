@@ -3,20 +3,23 @@ import { Card } from '../Card/Card';
 import { Form } from '../Form/Form';
 import './Column.scss';
 import icondelete from '../../../assets/icondelete.svg';
-import iconplus from '../../../assets/iconplus.svg';
 
 const Column = ({
   name,
   id,
   cards,
+  index,
   handleResize,
   handleTitleChange,
   handleDeleteColumn,
-  onClickNewCard,
-  showNewCardForm,
   addNewCard,
 }) => {
   const [newCard, setNewCard] = useState('');
+  const [showNewCardForm, setShowNewCardForm] = useState(false);
+
+  const onClickNewCard = () => {
+    setShowNewCardForm((prevState) => !prevState);
+  };
 
   const handleNewCardChange = (event) => {
     handleResize(event);
@@ -28,8 +31,16 @@ const Column = ({
   const onSubmitNewCard = (event) => {
     event.preventDefault();
 
-    addNewCard(newCard, id);
+    const cardsIdArray = cards.map(({ cardId }) => cardId);
+    const newCardId =
+      cardsIdArray.length === 0 ? 1 : Math.max(...cardsIdArray) + 1;
+
+    const card = { cardId: newCardId, title: newCard };
+    const newCards = [...cards, card];
+
+    addNewCard(newCards, index);
     setNewCard('');
+    onClickNewCard();
   };
 
   return (
@@ -47,20 +58,12 @@ const Column = ({
           <Card title={title} id={cardId} handleResize={handleResize} />
         ))}
       </ul>
-      {showNewCardForm !== id ? (
-        <div className="column__add-card">
-          <button type="button" onClick={() => onClickNewCard(id)}>
-            <img src={iconplus} alt="add" />
-            Add card
-          </button>
-        </div>
-      ) : (
-        <Form
-          onSubmit={onSubmitNewCard}
-          handleChange={handleNewCardChange}
-          onClick={onClickNewCard}
-        />
-      )}
+      <Form
+        checker={showNewCardForm}
+        onSubmit={onSubmitNewCard}
+        handleChange={handleNewCardChange}
+        onClick={onClickNewCard}
+      />
     </div>
   );
 };

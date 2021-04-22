@@ -78,42 +78,4 @@ li {
     align-items: center;
     overflow-y: auto;
   }
-  &__add-card {
-    background-color: transparent;
-    display: flex;
-    align-items: center;
-    height: fit-content;
-    width: 264px;
-    margin: 10px;
-    padding: 8px;
-    border-radius: 5px;
-    &:hover {
-      cursor: pointer;
-      background-color: rgba(9, 30, 66, 0.08);
-    }
-    img {
-      height: 24px;
-      opacity: 0.4;
-    }
-    button {
-      display: flex;
-      align-items: center;
-      border: 0;
-      color: #263959;
-      background-color: transparent;
-      overflow: hidden;
-      overflow-wrap: break-word;
-      resize: none;
-      font-size: 16px;
-      height: 24px;
-      line-height: 24px;
-      font-family: sans-serif;
-      padding: 8px 10px;
-      width: 260px;
-      opacity: 0.75;
-      &:hover {
-        cursor: pointer;
-      }
-    }
-  }
 }
