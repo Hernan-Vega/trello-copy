@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { Card } from '../Card/Card';
+import { Form } from '../Form/Form';
 import './Column.scss';
 import icondelete from '../../../assets/icondelete.svg';
 import iconplus from '../../../assets/iconplus.svg';
@@ -10,7 +12,26 @@ const Column = ({
   handleResize,
   handleTitleChange,
   handleDeleteColumn,
+  onClickNewCard,
+  showNewCardForm,
+  addNewCard,
 }) => {
+  const [newCard, setNewCard] = useState('');
+
+  const handleNewCardChange = (event) => {
+    handleResize(event);
+
+    const cardName = event.target.value;
+    setNewCard(cardName);
+  };
+
+  const onSubmitNewCard = (event) => {
+    event.preventDefault();
+
+    addNewCard(newCard, id);
+    setNewCard('');
+  };
+
   return (
     <div className="column">
       <div className="column__top">
@@ -22,14 +43,24 @@ const Column = ({
         </button>
       </div>
       <ul className="column__cardlist">
-        {cards.map(({ title, cardid }) => (
-          <Card title={title} id={cardid} handleResize={handleResize} />
+        {cards.map(({ title, cardId }) => (
+          <Card title={title} id={cardId} handleResize={handleResize} />
         ))}
       </ul>
-      <div className="column__add-card">
-        <img src={iconplus} alt="add" />
-        <textarea onChange={handleResize}>Add card</textarea>
-      </div>
+      {showNewCardForm !== id ? (
+        <div className="column__add-card">
+          <button type="button" onClick={() => onClickNewCard(id)}>
+            <img src={iconplus} alt="add" />
+            Add card
+          </button>
+        </div>
+      ) : (
+        <Form
+          onSubmit={onSubmitNewCard}
+          handleChange={handleNewCardChange}
+          onClick={onClickNewCard}
+        />
+      )}
     </div>
   );
 };

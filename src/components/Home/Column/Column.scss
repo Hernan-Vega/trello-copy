@@ -34,7 +34,7 @@ li {
     margin-left: 2px;
     textarea {
       border: 0;
-      color: #263959;
+      color: #263959b4;
       background-color: transparent;
       overflow: hidden;
       overflow-wrap: break-word;
@@ -59,13 +59,16 @@ li {
       color: #263959;
       background-color: transparent;
       padding: 5px;
-      &:hover {
-        cursor: pointer;
-        background-color: rgba(9, 30, 66, 0.08);
-      }
       img {
         height: 16px;
         opacity: 0.4;
+      }
+      &:hover {
+        cursor: pointer;
+        background-color: rgba(9, 30, 66, 0.08);
+        img {
+          opacity: 0.6;
+        }
       }
     }
   }
@@ -79,10 +82,10 @@ li {
     background-color: transparent;
     display: flex;
     align-items: center;
-    height: 24px;
-    width: 260px;
+    height: fit-content;
+    width: 264px;
     margin: 10px;
-    padding: 8px 10px;
+    padding: 8px;
     border-radius: 5px;
     &:hover {
       cursor: pointer;
@@ -92,7 +95,9 @@ li {
       height: 24px;
       opacity: 0.4;
     }
-    textarea {
+    button {
+      display: flex;
+      align-items: center;
       border: 0;
       color: #263959;
       background-color: transparent;
@@ -108,11 +113,6 @@ li {
       opacity: 0.75;
       &:hover {
         cursor: pointer;
-      }
-      &:focus {
-        background-color: white;
-        cursor: text;
-        opacity: 1;
       }
     }
   }

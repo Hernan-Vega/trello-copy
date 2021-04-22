@@ -10,13 +10,14 @@ const ColumnList = () => {
   const [columns, setColumns] = useState([]);
   const [showNewListForm, setShowNewListForm] = useState(false);
   const [newList, setNewList] = useState('');
+  const [showNewCardForm, setShowNewCardForm] = useState(0);
 
   const handleResize = (event) => {
     event.target.style.height = '';
     event.target.style.height = `calc(${event.target.scrollHeight}px - 4px)`;
   };
 
-  const handleClickNewColumn = () => {
+  const onClickNewColumn = () => {
     setShowNewListForm((prevState) => !prevState);
   };
 
@@ -35,7 +36,7 @@ const ColumnList = () => {
 
     setColumns([...columns, { name: newList, id: newId, cards: [] }]);
     setNewList('');
-    handleClickNewColumn();
+    onClickNewColumn();
   };
 
   const handleTitleChange = (event, titleId) => {
@@ -53,6 +54,30 @@ const ColumnList = () => {
     setColumns((prev) => prev.filter(({ id }) => id !== buttonId));
   };
 
+  const onClickNewCard = (columnId) => {
+    if (showNewCardForm !== columnId) {
+      setShowNewCardForm(columnId);
+    } else {
+      setShowNewCardForm(0);
+    }
+  };
+
+  const addNewCard = (card, columnId) => {
+    const copyColumns = [...columns];
+    const index = copyColumns.findIndex(({ id }) => id === columnId);
+    const columnCard = copyColumns[index];
+
+    let { cards } = columnCard;
+    const cardsIdArray = cards.map(({ id }) => id);
+    const newCardId =
+      cardsIdArray.length === 0 ? 1 : Math.max(...cardsIdArray) + 1;
+    cards = [...cards, { title: card, cardId: newCardId }];
+
+    copyColumns[index].cards = cards;
+    setColumns([...copyColumns]);
+    onClickNewCard();
+  };
+
   return (
     <ul className="column-list">
       {columns.map(({ name, id, cards }) => (
@@ -64,22 +89,27 @@ const ColumnList = () => {
             handleResize={handleResize}
             handleTitleChange={handleTitleChange}
             handleDeleteColumn={handleDeleteColumn}
+            onClickNewCard={onClickNewCard}
+            showNewCardForm={showNewCardForm}
+            addNewCard={addNewCard}
           />
         </li>
       ))}
       <li>
         {!showNewListForm ? (
-          <div className="column-list__add-list">
-            <button type="button" onClick={handleClickNewColumn}>
-              <img src={iconplus} alt="add" />
-              Add list
-            </button>
-          </div>
+          <button
+            type="button"
+            className="column-list__add-list"
+            onClick={onClickNewColumn}
+          >
+            <img src={iconplus} alt="add" />
+            Add list
+          </button>
         ) : (
           <Form
             onSubmit={onSubmitNewColumn}
             handleChange={handleNewListChange}
-            onClick={handleClickNewColumn}
+            onClick={onClickNewColumn}
           />
         )}
       </li>

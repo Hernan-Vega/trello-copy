@@ -2,7 +2,7 @@
 import './Form.scss';
 import icondelete from '../../../assets/icondelete.svg';
 
-const Form = ({ onSubmit, handleChange, handleClick }) => {
+const Form = ({ onSubmit, handleChange, onClick }) => {
   return (
     <form onSubmit={onSubmit} className="form">
       <textarea
@@ -15,7 +15,11 @@ const Form = ({ onSubmit, handleChange, handleClick }) => {
         <button type="submit" className="form__buttons__confirm">
           Add list
         </button>
-        <button type="button" onClick={handleClick}>
+        <button
+          type="button"
+          className="form__buttons__delete"
+          onClick={onClick}
+        >
           <img src={icondelete} alt="cancel" />
         </button>
       </div>

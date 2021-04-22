@@ -15,43 +15,27 @@ li {
   &__add-list {
     background-color: transparent;
     display: flex;
-    height: fit-content;
     align-items: center;
+    height: 40px;
     width: 280px;
     padding: 8px;
     background-color: #7ba5dd;
-    border-radius: 5px;
+    border-radius: 3px;
+    border: 0;
+    color: white;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    font-size: 14px;
+    line-height: 24px;
+    font-family: sans-serif;
+    padding: 0 8px;
+    img {
+      height: 24px;
+      opacity: 0.4;
+    }
     &:hover {
       cursor: pointer;
       background-color: #b5c5da;
-    }
-    button {
-      display: flex;
-      align-items: center;
-      border: 0;
-      color: white;
-      background-color: transparent;
-      overflow: hidden;
-      overflow-wrap: break-word;
-      width: 260px;
-      height: 24px;
-      resize: none;
-      font-size: 16px;
-      line-height: 24px;
-      font-family: sans-serif;
-      padding: 8px;
-      font-weight: 600;
-      img {
-        height: 24px;
-        opacity: 0.4;
-      }
-      &:hover {
-        cursor: pointer;
-      }
-      &:focus {
-        cursor: text;
-        opacity: 1;
-      }
     }
   }
 }
