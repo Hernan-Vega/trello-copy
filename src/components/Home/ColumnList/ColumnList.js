@@ -60,6 +60,12 @@ const ColumnList = () => {
     setColumns([...copyColumns]);
   };
 
+  const handleColumnCardEdit = (edittedTask, index, cardIndex) => {
+    const copyColumns = [...columns];
+    copyColumns[index].cards[cardIndex] = edittedTask;
+    setColumns([...copyColumns]);
+  };
+
   return (
     <ul className="column-list">
       {columns.map(({ name, id, cards }, index) => (
@@ -73,6 +79,7 @@ const ColumnList = () => {
             handleTitleChange={handleTitleChange}
             handleDeleteColumn={handleDeleteColumn}
             addNewCard={addNewCard}
+            handleColumnCardEdit={handleColumnCardEdit}
           />
         </li>
       ))}

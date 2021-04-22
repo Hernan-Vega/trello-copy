@@ -13,6 +13,7 @@ const Column = ({
   handleTitleChange,
   handleDeleteColumn,
   addNewCard,
+  handleColumnCardEdit,
 }) => {
   const [newCard, setNewCard] = useState('');
   const [showNewCardForm, setShowNewCardForm] = useState(false);
@@ -43,6 +44,11 @@ const Column = ({
     onClickNewCard();
   };
 
+  const taskEdit = (newTitle, taskId, cardIndex) => {
+    const edittedTask = { title: newTitle, cardId: taskId };
+    handleColumnCardEdit(edittedTask, index, cardIndex);
+  };
+
   return (
     <div className="column">
       <div className="column__top">
@@ -54,8 +60,15 @@ const Column = ({
         </button>
       </div>
       <ul className="column__cardlist">
-        {cards.map(({ title, cardId }) => (
-          <Card title={title} id={cardId} handleResize={handleResize} />
+        {cards.map(({ title, cardId }, cardIndex) => (
+          <Card
+            columnId={id}
+            title={title}
+            cardId={cardId}
+            cardIndex={cardIndex}
+            handleResize={handleResize}
+            taskEdit={taskEdit}
+          />
         ))}
       </ul>
       <Form
