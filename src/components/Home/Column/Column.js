@@ -12,9 +12,7 @@ const Column = ({
   handleResize,
   handleTitleChange,
   handleDeleteColumn,
-  addNewCard,
-  handleColumnCardEdit,
-  handleColumnDeleteTask,
+  cardListHandler,
 }) => {
   const [newCard, setNewCard] = useState('');
   const [showNewCardForm, setShowNewCardForm] = useState(false);
@@ -40,19 +38,22 @@ const Column = ({
     const card = { cardId: newCardId, title: newCard };
     const newCards = [...cards, card];
 
-    addNewCard(newCards, index);
+    cardListHandler(newCards, index);
     setNewCard('');
     onClickNewCard();
   };
 
   const taskEdit = (newTitle, taskId, cardIndex) => {
+    const cardsCopy = [...cards];
     const edittedTask = { title: newTitle, cardId: taskId };
-    handleColumnCardEdit(edittedTask, index, cardIndex);
+
+    cardsCopy[cardIndex] = edittedTask;
+    cardListHandler(cardsCopy, index);
   };
 
   const handleDeleteTask = (taskId) => {
     const cardsWithoutDeleted = cards.filter(({ cardId }) => cardId !== taskId);
-    handleColumnDeleteTask(cardsWithoutDeleted, index);
+    cardListHandler(cardsWithoutDeleted, index);
   };
 
   return (

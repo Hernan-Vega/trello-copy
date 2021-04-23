@@ -22,11 +22,11 @@ const Card = ({
     }
   };
 
-  const handleCardEdit = (event, id) => {
+  const handleCardEdit = (event) => {
     handleResize(event);
 
     const newTitle = event.target.value;
-    taskEdit(newTitle, id, cardIndex);
+    taskEdit(newTitle, cardId, cardIndex);
   };
 
   const deleteTask = (id) => {
@@ -39,7 +39,7 @@ const Card = ({
         <textarea
           disabled={!isEditing}
           ref={inputElement}
-          onChange={(event) => handleCardEdit(event, cardId)}
+          onChange={handleCardEdit}
         >
           {title}
         </textarea>

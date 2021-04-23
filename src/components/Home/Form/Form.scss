@@ -10,9 +10,12 @@
   border: 0;
   overflow: hidden;
   overflow-wrap: break-word;
+  line-height: 24px;
+  font-family: sans-serif;
 }
+
 .add-column {
-  width: 280px;
+  width: 296px;
   color: white;
   font-size: 14px;
   line-height: 24px;
@@ -27,15 +30,20 @@
     background-color: #b5c5da;
   }
 }
+
 .add-card {
   background-color: transparent;
   display: flex;
   align-items: center;
   height: fit-content;
-  width: 264px;
+  width: auto;
   margin: 10px;
   padding: 8px;
   border-radius: 5px;
+  border: 0;
+  color: #5e6c84;
+  background-color: transparent;
+  opacity: 0.75;
   &:hover {
     cursor: pointer;
     background-color: rgba(9, 30, 66, 0.08);
@@ -43,26 +51,6 @@
   img {
     height: 24px;
     opacity: 0.4;
-  }
-  button {
-    display: flex;
-    align-items: center;
-    border: 0;
-    color: #263959;
-    background-color: transparent;
-    overflow: hidden;
-    overflow-wrap: break-word;
-    resize: none;
-    font-size: 16px;
-    height: 24px;
-    line-height: 24px;
-    font-family: sans-serif;
-    padding: 8px 10px;
-    width: 260px;
-    opacity: 0.75;
-    &:hover {
-      cursor: pointer;
-    }
   }
 }
 
@@ -73,15 +61,11 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
   max-height: 100%;
   white-space: normal;
-  color: #5e6c84;
-  height: 56px;
-  align-items: center;
-  width: 280px;
+  width: fit-content;
   height: fit-content;
-  textarea {
+  &__text {
     color: #263959;
     background-color: white;
     overflow: hidden;
@@ -91,20 +75,12 @@
     line-height: 24px;
     font-family: sans-serif;
     border-radius: 5px;
-    height: 20px;
-    width: 260px;
-    border: 3px solid #0079bf;
-    padding: 4px;
-    margin-top: 4px;
   }
-  .buttons {
-    height: 28px;
-    width: 280px;
+  &__buttons {
+    height: fit-content;
     display: flex;
-    margin-bottom: 8px;
     button {
-      height: 28px;
-      margin: 4px;
+      height: 36px;
       border: 0;
     }
     &__confirm {
@@ -118,6 +94,7 @@
       }
     }
     &__delete {
+      margin-left: 4px;
       img {
         height: 16px;
         opacity: 0.5;
@@ -128,6 +105,34 @@
           opacity: 0.7;
         }
       }
+    }
+  }
+
+  .form-column {
+    &__text {
+      height: 24px;
+      width: 282px;
+      border: 3px solid #0079bf;
+      padding: 4px;
+      margin: 4px;
+    }
+    &__buttons {
+      width: auto;
+      margin: 0 4px 4px 4px;
+    }
+  }
+
+  .form-card {
+    &__text {
+      height: auto;
+      width: 272px;
+      border: 0;
+      padding: 4px;
+      margin: 8px 10px;
+    }
+    &__buttons {
+      width: auto;
+      margin: 0 10px 8px 10px;
     }
   }
 }
