@@ -62,7 +62,16 @@ const ColumnList = () => {
 
   const handleColumnCardEdit = (edittedTask, index, cardIndex) => {
     const copyColumns = [...columns];
+
     copyColumns[index].cards[cardIndex] = edittedTask;
+    setColumns([...copyColumns]);
+  };
+
+  const handleColumnDeleteTask = (cardsWithoutDeleted, index) => {
+    const copyColumns = [...columns];
+    const columnCards = copyColumns[index];
+
+    columnCards.cards = cardsWithoutDeleted;
     setColumns([...copyColumns]);
   };
 
@@ -80,6 +89,7 @@ const ColumnList = () => {
             handleDeleteColumn={handleDeleteColumn}
             addNewCard={addNewCard}
             handleColumnCardEdit={handleColumnCardEdit}
+            handleColumnDeleteTask={handleColumnDeleteTask}
           />
         </li>
       ))}

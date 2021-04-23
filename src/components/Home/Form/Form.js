@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-autofocus */
 import './Form.scss';
 import icondelete from '../../../assets/icondelete.svg';
-import iconplus from '../../../assets/iconplus.svg';
+import iconpluswhite from '../../../assets/iconpluswhite.svg';
 
 const Form = ({ isColumn, checker, onSubmit, handleChange, onClick }) => {
   return !checker ? (
@@ -10,7 +10,7 @@ const Form = ({ isColumn, checker, onSubmit, handleChange, onClick }) => {
       className={isColumn ? 'add-column' : 'add-card'}
       onClick={onClick}
     >
-      <img src={iconplus} alt="add" />
+      <img src={iconpluswhite} alt="add" />
       {isColumn ? `Add list` : `Add card`}
     </button>
   ) : (
