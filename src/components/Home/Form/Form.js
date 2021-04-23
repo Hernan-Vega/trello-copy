@@ -4,7 +4,21 @@ import icondelete from '../../../assets/icondelete.svg';
 import iconpluswhite from '../../../assets/iconpluswhite.svg';
 import iconplusgray from '../../../assets/iconplusgray.svg';
 
-const Form = ({ isColumn, checker, onSubmit, handleChange, onClick }) => {
+const Form = ({
+  isColumn,
+  edittingCard,
+  checker,
+  onSubmit,
+  handleChange,
+  onClick,
+}) => {
+  const buttonName = () => {
+    if (edittingCard) {
+      return 'Confirm';
+    }
+    return isColumn ? 'Add list' : 'Add card';
+  };
+
   return !checker ? (
     <button
       type="button"
@@ -26,12 +40,16 @@ const Form = ({ isColumn, checker, onSubmit, handleChange, onClick }) => {
       <textarea
         type="text"
         placeholder={
-          isColumn ? `Enter the list title...` : `Enter the task title...`
+          isColumn
+            ? `Enter the list title...`
+            : !edittingCard && `Enter the task title...`
         }
         className={isColumn ? `form-column__text` : `form-card__text`}
         onChange={handleChange}
         autoFocus
-      />
+      >
+        {edittingCard}
+      </textarea>
       <div className={isColumn ? `form-column__buttons` : `form-card__buttons`}>
         <button
           type="submit"
@@ -41,19 +59,21 @@ const Form = ({ isColumn, checker, onSubmit, handleChange, onClick }) => {
               : `form-card__buttons__confirm`
           }
         >
-          {isColumn ? `Add list` : `Add card`}
+          {buttonName()}
         </button>
-        <button
-          type="button"
-          onClick={onClick}
-          className={
-            isColumn
-              ? `form-column__buttons__delete`
-              : `form-card__buttons__delete`
-          }
-        >
-          <img src={icondelete} alt="cancel" />
-        </button>
+        {!edittingCard && (
+          <button
+            type="button"
+            onClick={onClick}
+            className={
+              isColumn
+                ? `form-column__buttons__delete`
+                : `form-card__buttons__delete`
+            }
+          >
+            <img src={icondelete} alt="cancel" />
+          </button>
+        )}
       </div>
     </form>
   );
