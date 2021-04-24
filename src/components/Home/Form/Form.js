@@ -6,14 +6,22 @@ import iconplusgray from '../../../assets/iconplusgray.svg';
 
 const Form = ({
   isColumn,
+  isEdit,
   edittingCard,
   checker,
   onSubmit,
   handleChange,
   onClick,
 }) => {
+  const placeholder = () => {
+    if (!isEdit) {
+      return isColumn ? 'Enter the list title...' : `Enter the task title...`;
+    }
+    return null;
+  };
+
   const buttonName = () => {
-    if (edittingCard) {
+    if (isEdit) {
       return 'Confirm';
     }
     return isColumn ? 'Add list' : 'Add card';
@@ -39,11 +47,7 @@ const Form = ({
     >
       <textarea
         type="text"
-        placeholder={
-          isColumn
-            ? `Enter the list title...`
-            : !edittingCard && `Enter the task title...`
-        }
+        placeholder={placeholder()}
         className={isColumn ? `form-column__text` : `form-card__text`}
         onChange={handleChange}
         autoFocus
@@ -61,7 +65,7 @@ const Form = ({
         >
           {buttonName()}
         </button>
-        {!edittingCard && (
+        {!isEdit && (
           <button
             type="button"
             onClick={onClick}

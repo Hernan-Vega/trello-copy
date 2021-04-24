@@ -6,4 +6,15 @@
 
 body {
   margin: unset;
+  ::-webkit-scrollbar {
+    height: 12px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0067a3;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #66a4c7;
+    border-radius: 10px;
+  }
 }

@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/no-autofocus */
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { Form } from '../Form/Form';
 import './Cards.scss';
 import iconedit from '../../../assets/iconedit.svg';
@@ -14,7 +14,6 @@ const Card = ({
   handleDeleteTask,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const inputElement = useRef(null);
 
   const submitCardChange = (event) => {
     event.preventDefault();
@@ -23,9 +22,6 @@ const Card = ({
 
   const onClickCardChange = () => {
     setIsEditing((prevState) => !prevState);
-    if (inputElement.current) {
-      inputElement.current.focus();
-    }
   };
 
   const handleCardEdit = (event) => {
@@ -43,13 +39,9 @@ const Card = ({
     <li key={cardId}>
       {!isEditing ? (
         <div className="card">
-          <textarea
-            disabled={!isEditing}
-            ref={inputElement}
-            onChange={handleCardEdit}
-          >
-            {title}
-          </textarea>
+          <div className="card__carddiv">
+            <span>{title}</span>
+          </div>
           <button type="button" onClick={onClickCardChange}>
             <img src={iconedit} alt="edit" />
           </button>
@@ -59,6 +51,7 @@ const Card = ({
         </div>
       ) : (
         <Form
+          isEdit
           edittingCard={title}
           checker={isEditing}
           onSubmit={submitCardChange}
