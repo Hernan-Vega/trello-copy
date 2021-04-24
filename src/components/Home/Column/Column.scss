@@ -28,9 +28,10 @@ li {
   &__top {
     display: flex;
     height: fit-content;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: center;
     width: 280px;
-    padding: 8px;
+    padding: 6px 0 4px 8px;
     margin-left: 2px;
     textarea {
       border: 0;
@@ -38,14 +39,14 @@ li {
       background-color: transparent;
       overflow: hidden;
       overflow-wrap: break-word;
-      height: 24px;
+      height: 28px;
       width: 260px;
       resize: none;
       font-size: 16px;
       line-height: 24px;
       font-family: sans-serif;
       font-weight: 600;
-      padding: 2px 6px;
+      padding: 4px 0 0 8px;
       &:hover {
         cursor: pointer;
       }
@@ -59,6 +60,9 @@ li {
       color: #263959;
       background-color: transparent;
       padding: 5px;
+      border-radius: 5px;
+      height: 36px;
+      width: 36px;
       img {
         height: 16px;
         opacity: 0.4;

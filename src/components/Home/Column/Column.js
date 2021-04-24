@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Card } from '../Card/Card';
 import { Form } from '../Form/Form';
+import { Confirm } from '../Confirm/Confirm';
 import './Column.scss';
 import icondelete from '../../../assets/icondelete.svg';
 
@@ -16,6 +17,7 @@ const Column = ({
 }) => {
   const [newCard, setNewCard] = useState('');
   const [showNewCardForm, setShowNewCardForm] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   const onClickNewCard = () => {
     setShowNewCardForm((prevState) => !prevState);
@@ -51,6 +53,10 @@ const Column = ({
     cardListHandler(cardsCopy, index);
   };
 
+  const areYouSure = () => {
+    setConfirmDelete((prevState) => !prevState);
+  };
+
   const handleDeleteTask = (taskId) => {
     const cardsWithoutDeleted = cards.filter(({ cardId }) => cardId !== taskId);
     cardListHandler(cardsWithoutDeleted, index);
@@ -58,14 +64,23 @@ const Column = ({
 
   return (
     <div className="column">
-      <div className="column__top">
-        <textarea onChange={(event) => handleTitleChange(event, id)}>
-          {name}
-        </textarea>
-        <button type="button" onClick={() => handleDeleteColumn(id)}>
-          <img src={icondelete} alt="delete" />
-        </button>
-      </div>
+      {confirmDelete ? (
+        <Confirm
+          isColumn
+          id={id}
+          onClickConfirm={handleDeleteColumn}
+          onClickCancel={areYouSure}
+        />
+      ) : (
+        <div className="column__top">
+          <textarea onChange={(event) => handleTitleChange(event, id)}>
+            {name}
+          </textarea>
+          <button type="button" onClick={areYouSure}>
+            <img src={icondelete} alt="delete" />
+          </button>
+        </div>
+      )}
       <ul className="column__cardlist">
         {cards.map(({ title, cardId }, cardIndex) => (
           <Card

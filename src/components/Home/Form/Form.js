@@ -46,7 +46,6 @@ const Form = ({
       className={isColumn ? 'form-column' : 'form-card'}
     >
       <textarea
-        type="text"
         placeholder={placeholder()}
         className={isColumn ? `form-column__text` : `form-card__text`}
         onChange={handleChange}

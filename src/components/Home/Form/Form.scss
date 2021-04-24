@@ -75,6 +75,7 @@
     line-height: 24px;
     font-family: sans-serif;
     border-radius: 5px;
+    height: fit-content;
   }
   &__buttons {
     height: fit-content;
@@ -90,7 +91,7 @@
       width: 80px;
       &:hover {
         cursor: pointer;
-        background-color: #7abd68;
+        opacity: 0.8;
       }
     }
     &__delete {
