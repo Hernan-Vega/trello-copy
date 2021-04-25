@@ -1,8 +1,13 @@
 /* eslint-disable no-param-reassign */
 
 import { useState } from 'react';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+
+import { move, reorder } from 'utils/movement';
+import { getListStyle } from 'utils/styles';
 import { Column } from '../Column/Column';
 import { Form } from '../Form/Form';
+
 import './ColumnList.scss';
 
 const ColumnList = () => {
@@ -49,7 +54,7 @@ const ColumnList = () => {
   };
 
   const handleDeleteColumn = (buttonId) => {
-    setColumns((prev) => prev.filter(({ id }) => id !== buttonId));
+    setColumns(columns.filter(({ id }) => id !== buttonId));
   };
 
   const cardListHandler = (newCards, columnIndex) => {
@@ -60,32 +65,63 @@ const ColumnList = () => {
     setColumns([...copyColumns]);
   };
 
+  const onDragEnd = (result) => {
+    const { source, destination } = result;
+
+    if (!destination) {
+      return;
+    }
+    const sInd = +source.droppableId;
+    const dInd = +destination.droppableId;
+
+    const state = columns.map(({ cards }) => cards);
+
+    if (sInd === dInd) {
+      const items = reorder(state[sInd], source.index, destination.index);
+      const newColumns = [...columns];
+      newColumns[sInd].cards = items;
+      setColumns(newColumns);
+    } else {
+      const newResult = move(state[sInd], state[dInd], source, destination);
+      const newColumns = [...columns];
+      newColumns[sInd].cards = newResult[sInd];
+      newColumns[dInd].cards = newResult[dInd];
+      setColumns(newColumns);
+    }
+  };
+
   return (
-    <ul className="column-list">
-      {columns.map(({ name, id, cards }, index) => (
-        <li key={id}>
-          <Column
-            name={name}
-            id={id}
-            cards={cards}
-            index={index}
-            handleResize={handleResize}
-            handleTitleChange={handleTitleChange}
-            handleDeleteColumn={handleDeleteColumn}
-            cardListHandler={cardListHandler}
-          />
-        </li>
-      ))}
-      <li>
-        <Form
-          isColumn
-          checker={showNewListForm}
-          onSubmit={onSubmitNewColumn}
-          handleChange={handleNewListChange}
-          onClick={onClickNewColumn}
-        />
-      </li>
-    </ul>
+    <div className="column-list">
+      <DragDropContext onDragEnd={onDragEnd}>
+        {columns.map(({ id, name, cards }, ind) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <Droppable key={ind} droppableId={`${ind}`}>
+            {(provided, snapshot) => (
+              <Column
+                cards={cards}
+                name={name}
+                id={id}
+                index={ind}
+                handleResize={handleResize}
+                handleTitleChange={handleTitleChange}
+                handleDeleteColumn={handleDeleteColumn}
+                cardListHandler={cardListHandler}
+                ref={provided.innerRef}
+                style={getListStyle(snapshot.isDraggingOver)}
+                {...provided.droppableProps}
+              />
+            )}
+          </Droppable>
+        ))}
+      </DragDropContext>
+      <Form
+        isColumn
+        checker={showNewListForm}
+        onSubmit={onSubmitNewColumn}
+        handleChange={handleNewListChange}
+        onClick={onClickNewColumn}
+      />
+    </div>
   );
 };
 
