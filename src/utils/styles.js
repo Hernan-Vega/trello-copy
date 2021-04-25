@@ -3,6 +3,5 @@ export const getItemStyle = (isDragging, draggableStyle) => ({
 });
 
 export const getListStyle = (isDraggingOver) => ({
-  background: isDraggingOver ? 'lightblue' : 'lightgrey',
   height: 'fit-content',
 });
