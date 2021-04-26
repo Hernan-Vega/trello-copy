@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 
 import { Form } from '../Form/Form';
-import { Confirm } from '../Confirm/Confirm';
 import iconedit from '../../../assets/iconedit.svg';
 import icondelete from '../../../assets/icondelete.svg';
 
@@ -22,25 +21,6 @@ const Card = React.forwardRef(
     ref,
   ) => {
     const [isEditing, setIsEditing] = useState(false);
-    const [confirmDeleteTask, setConfirmDeleteTask] = useState(false);
-
-    const Handling = () => {
-      return isEditing && !confirmDeleteTask ? (
-        <Form
-          isEdit
-          edittingCard={title}
-          checker={isEditing}
-          onSubmit={submitCardChange}
-          handleChange={handleCardEdit}
-        />
-      ) : (
-        <Confirm
-          id={cardId}
-          onClickConfirm={deleteTask}
-          onClickCancel={areYouSure}
-        />
-      );
-    };
 
     const submitCardChange = (event) => {
       event.preventDefault();
@@ -58,18 +38,13 @@ const Card = React.forwardRef(
       taskEdit(newTitle, cardId, cardIndex);
     };
 
-    const areYouSure = () => {
-      setConfirmDeleteTask((prevState) => !prevState);
-    };
-
     const deleteTask = (id) => {
       handleDeleteTask(id);
-      setConfirmDeleteTask((prevState) => !prevState);
     };
 
     return (
       <li key={cardId} id={cardId} ref={ref} {...props}>
-        {!isEditing && !confirmDeleteTask ? (
+        {!isEditing ? (
           <div className="card">
             <div className="card__carddiv">
               <span>{title}</span>
@@ -77,12 +52,18 @@ const Card = React.forwardRef(
             <button type="button" onClick={onClickCardChange}>
               <img src={iconedit} alt="edit" />
             </button>
-            <button type="button" onClick={areYouSure}>
+            <button type="button" onClick={() => deleteTask(cardId)}>
               <img src={icondelete} alt="delete" />
             </button>
           </div>
         ) : (
-          <Handling />
+          <Form
+            isEdit
+            edittingCard={title}
+            checker={isEditing}
+            onSubmit={submitCardChange}
+            handleChange={handleCardEdit}
+          />
         )}
       </li>
     );

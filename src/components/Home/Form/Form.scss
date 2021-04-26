@@ -70,14 +70,14 @@
   &__text {
     color: #263959;
     background-color: white;
-    overflow: hidden;
+    overflow: visible;
     overflow-wrap: break-word;
-    resize: none;
+    white-space: normal;
+    width: 280px;
     font-size: 16px;
     line-height: 24px;
     font-family: sans-serif;
     border-radius: 5px;
-    height: fit-content;
   }
   &__buttons {
     height: fit-content;
@@ -132,6 +132,7 @@
       border: 0;
       padding: 4px;
       margin: 8px 10px;
+      direction: ltr;
     }
     &__buttons {
       width: auto;
