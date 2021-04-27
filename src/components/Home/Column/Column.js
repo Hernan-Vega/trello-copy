@@ -1,91 +1,139 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { Draggable } from 'react-beautiful-dnd';
+
+import { getItemStyle } from 'utils/styles';
 import { Card } from '../Card/Card';
+import { Confirm } from '../Confirm/Confirm';
 import { Form } from '../Form/Form';
-import './Column.scss';
 import icondelete from '../../../assets/icondelete.svg';
 
-const Column = ({
-  name,
-  id,
-  cards,
-  index,
-  handleResize,
-  handleTitleChange,
-  handleDeleteColumn,
-  cardListHandler,
-}) => {
-  const [newCard, setNewCard] = useState('');
-  const [showNewCardForm, setShowNewCardForm] = useState(false);
+import './Column.scss';
 
-  const onClickNewCard = () => {
-    setShowNewCardForm((prevState) => !prevState);
-  };
+const Column = React.forwardRef(
+  (
+    {
+      name,
+      id,
+      index,
+      cards,
+      handleResize,
+      handleTitleChange,
+      handleDeleteColumn,
+      addNewCard,
+      cardListHandler,
+      ...props
+    },
+    ref,
+  ) => {
+    const [newCard, setNewCard] = useState('');
+    const [showNewCardForm, setShowNewCardForm] = useState(false);
+    const [confirmDelete, setConfirmDelete] = useState(false);
 
-  const handleNewCardChange = (event) => {
-    handleResize(event);
+    const onClickNewCard = () => {
+      setShowNewCardForm((prevState) => !prevState);
+    };
 
-    const cardName = event.target.value;
-    setNewCard(cardName);
-  };
+    const handleNewCardChange = (event) => {
+      handleResize(event);
 
-  const onSubmitNewCard = (event) => {
-    event.preventDefault();
+      const cardName = event.target.value;
+      setNewCard(cardName);
+    };
 
-    const cardsIdArray = cards.map(({ cardId }) => cardId);
-    const newCardId =
-      cardsIdArray.length === 0 ? 1 : Math.max(...cardsIdArray) + 1;
+    const onSubmitNewCard = (event) => {
+      event.preventDefault();
 
-    const card = { cardId: newCardId, title: newCard };
-    const newCards = [...cards, card];
+      const cardsIdArray = cards.map(({ cardId }) => cardId.split('-')[0]);
+      const maxId = Math.max(...cardsIdArray);
 
-    cardListHandler(newCards, index);
-    setNewCard('');
-    onClickNewCard();
-  };
+      const newCardId =
+        cardsIdArray.length === 0 ? `1-${id}` : `${maxId + 1}-${id}`;
+      const card = { cardId: newCardId, title: newCard };
+      const newCards = [...cards, card];
 
-  const taskEdit = (newTitle, taskId, cardIndex) => {
-    const cardsCopy = [...cards];
-    const edittedTask = { title: newTitle, cardId: taskId };
+      cardListHandler(newCards, index);
+      setNewCard('');
+      onClickNewCard();
+    };
 
-    cardsCopy[cardIndex] = edittedTask;
-    cardListHandler(cardsCopy, index);
-  };
+    const taskEdit = (newTitle, taskId, cardIndex) => {
+      const cardsCopy = [...cards];
+      const edittedTask = { title: newTitle, cardId: taskId };
 
-  const handleDeleteTask = (taskId) => {
-    const cardsWithoutDeleted = cards.filter(({ cardId }) => cardId !== taskId);
-    cardListHandler(cardsWithoutDeleted, index);
-  };
+      cardsCopy[cardIndex] = edittedTask;
+      cardListHandler(cardsCopy, index);
+    };
 
-  return (
-    <div className="column">
-      <div className="column__top">
-        <textarea onChange={(event) => handleTitleChange(event, id)}>
-          {name}
-        </textarea>
-        <button type="button" onClick={() => handleDeleteColumn(id)}>
-          <img src={icondelete} alt="delete" />
-        </button>
-      </div>
-      <ul className="column__cardlist">
-        {cards.map(({ title, cardId }, cardIndex) => (
-          <Card
-            title={title}
-            cardId={cardId}
-            cardIndex={cardIndex}
-            handleResize={handleResize}
-            taskEdit={taskEdit}
-            handleDeleteTask={handleDeleteTask}
+    const areYouSure = () => {
+      setConfirmDelete((prevState) => !prevState);
+    };
+
+    const handleDeleteTask = (taskId) => {
+      const cardsWithoutDeleted = cards.filter(
+        ({ cardId }) => cardId !== taskId,
+      );
+
+      cardListHandler(cardsWithoutDeleted, index);
+    };
+
+    const deleteColumn = (columnId) => {
+      setConfirmDelete(false);
+      handleDeleteColumn(columnId);
+    };
+
+    return (
+      <div className="column" ref={ref} {...props}>
+        {confirmDelete ? (
+          <Confirm
+            isColumn
+            id={id}
+            onClickConfirm={deleteColumn}
+            onClickCancel={areYouSure}
           />
-        ))}
-      </ul>
-      <Form
-        checker={showNewCardForm}
-        onSubmit={onSubmitNewCard}
-        handleChange={handleNewCardChange}
-        onClick={onClickNewCard}
-      />
-    </div>
-  );
-};
+        ) : (
+          <div className="column__top">
+            <textarea onChange={(event) => handleTitleChange(event, id)}>
+              {name}
+            </textarea>
+            <button type="button" onClick={areYouSure}>
+              <img src={icondelete} alt="delete" />
+            </button>
+          </div>
+        )}
+        <ul className="column__cardlist">
+          {cards.map(({ title, cardId }, cardIndex) => (
+            <Draggable key={cardId} draggableId={cardId} index={cardIndex}>
+              {(provided, snapshot) => {
+                return (
+                  <Card
+                    title={title}
+                    cardId={cardId}
+                    cardIndex={cardIndex}
+                    handleResize={handleResize}
+                    taskEdit={taskEdit}
+                    handleDeleteTask={handleDeleteTask}
+                    ref={provided.innerRef}
+                    style={getItemStyle(
+                      snapshot.isDragging,
+                      provided.draggableProps.style,
+                    )}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                  />
+                );
+              }}
+            </Draggable>
+          ))}
+        </ul>
+        <Form
+          checker={showNewCardForm}
+          onSubmit={onSubmitNewCard}
+          handleChange={handleNewCardChange}
+          onClick={onClickNewCard}
+        />
+      </div>
+    );
+  },
+);
 
 export { Column };

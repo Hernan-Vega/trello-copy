@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/no-autofocus */
 import './Form.scss';
 import icondelete from '../../../assets/icondelete.svg';
 import iconpluswhite from '../../../assets/iconpluswhite.svg';
@@ -45,15 +44,14 @@ const Form = ({
       onSubmit={onSubmit}
       className={isColumn ? 'form-column' : 'form-card'}
     >
-      <textarea
+      <input
         type="text"
+        minLength="1"
         placeholder={placeholder()}
         className={isColumn ? `form-column__text` : `form-card__text`}
         onChange={handleChange}
-        autoFocus
-      >
-        {edittingCard}
-      </textarea>
+        value={edittingCard}
+      />
       <div className={isColumn ? `form-column__buttons` : `form-card__buttons`}>
         <button
           type="submit"
