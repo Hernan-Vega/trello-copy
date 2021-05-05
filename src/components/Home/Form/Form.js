@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react';
+
 import './Form.scss';
 import icondelete from '../../../assets/icondelete.svg';
 import iconpluswhite from '../../../assets/iconpluswhite.svg';
@@ -12,6 +14,14 @@ const Form = ({
   handleChange,
   onClick,
 }) => {
+  const formRef = useRef(null);
+
+  useEffect(() => {
+    if (formRef.current) {
+      formRef.current.focus();
+    }
+  }, [checker]);
+
   const placeholder = () => {
     if (!isEdit) {
       return isColumn ? 'Enter the list title...' : `Enter the task title...`;
@@ -46,6 +56,7 @@ const Form = ({
     >
       <input
         type="text"
+        ref={formRef}
         minLength="1"
         placeholder={placeholder()}
         className={isColumn ? `form-column__text` : `form-card__text`}
