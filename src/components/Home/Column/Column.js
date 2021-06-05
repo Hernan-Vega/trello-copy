@@ -82,15 +82,8 @@ const Column = React.forwardRef(
     };
 
     return (
-      <div className="column" ref={ref} {...props}>
-        {confirmDelete ? (
-          <Confirm
-            isColumn
-            id={id}
-            onClickConfirm={deleteColumn}
-            onClickCancel={areYouSure}
-          />
-        ) : (
+      <div>
+        <div className="column" ref={ref} {...props}>
           <div className="column__top">
             <textarea onChange={(event) => handleTitleChange(event, id)}>
               {name}
@@ -99,38 +92,47 @@ const Column = React.forwardRef(
               <img src={icondelete} alt="delete" />
             </button>
           </div>
+          <ul className="column__cardlist">
+            {cards.map(({ title, cardId }, cardIndex) => (
+              <Draggable key={cardId} draggableId={cardId} index={cardIndex}>
+                {(provided, snapshot) => {
+                  return (
+                    <Card
+                      title={title}
+                      cardId={cardId}
+                      cardIndex={cardIndex}
+                      handleResize={handleResize}
+                      taskEdit={taskEdit}
+                      handleDeleteTask={handleDeleteTask}
+                      ref={provided.innerRef}
+                      style={getItemStyle(
+                        snapshot.isDragging,
+                        provided.draggableProps.style,
+                      )}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                    />
+                  );
+                }}
+              </Draggable>
+            ))}
+          </ul>
+          <Form
+            checker={showNewCardForm}
+            onSubmit={onSubmitNewCard}
+            handleChange={handleNewCardChange}
+            onClick={onClickNewCard}
+          />
+        </div>
+        {confirmDelete && (
+          <Confirm
+            isColumn
+            id={id}
+            name={name}
+            onClickConfirm={deleteColumn}
+            onClickCancel={areYouSure}
+          />
         )}
-        <ul className="column__cardlist">
-          {cards.map(({ title, cardId }, cardIndex) => (
-            <Draggable key={cardId} draggableId={cardId} index={cardIndex}>
-              {(provided, snapshot) => {
-                return (
-                  <Card
-                    title={title}
-                    cardId={cardId}
-                    cardIndex={cardIndex}
-                    handleResize={handleResize}
-                    taskEdit={taskEdit}
-                    handleDeleteTask={handleDeleteTask}
-                    ref={provided.innerRef}
-                    style={getItemStyle(
-                      snapshot.isDragging,
-                      provided.draggableProps.style,
-                    )}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                  />
-                );
-              }}
-            </Draggable>
-          ))}
-        </ul>
-        <Form
-          checker={showNewCardForm}
-          onSubmit={onSubmitNewCard}
-          handleChange={handleNewCardChange}
-          onClick={onClickNewCard}
-        />
       </div>
     );
   },

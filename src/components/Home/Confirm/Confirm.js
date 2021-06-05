@@ -1,9 +1,11 @@
 import './Confirm.scss';
 
-const Confirm = ({ id, onClickConfirm, onClickCancel }) => {
+const Confirm = ({ id, name, onClickConfirm, onClickCancel }) => {
   return (
     <div className="confirm">
-      <span>Do you want to delete this list?</span>
+      <p>
+        Do you want to delete the <span>{name}</span> column?
+      </p>
       <div className="confirm__buttons">
         <button
           type="button"

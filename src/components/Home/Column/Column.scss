@@ -4,6 +4,7 @@ li {
   margin: 0;
   padding: 0;
 }
+
 .column {
   background-color: #ebecf0;
   width: 300px;
@@ -14,17 +15,21 @@ li {
   max-height: 100%;
   white-space: normal;
   color: #5e6c84;
+
   ::-webkit-scrollbar {
     width: 8px;
   }
+
   ::-webkit-scrollbar-track {
     background: #b3becc;
     border-radius: 10px;
   }
+
   ::-webkit-scrollbar-thumb {
     background: #778597;
     border-radius: 10px;
   }
+
   &__top {
     display: flex;
     height: fit-content;
@@ -33,6 +38,7 @@ li {
     width: 280px;
     padding: 6px 0 4px 8px;
     margin-left: 2px;
+
     textarea {
       border: 0;
       color: #263959b4;
@@ -47,14 +53,14 @@ li {
       font-family: sans-serif;
       font-weight: 600;
       padding: 4px 0 0 8px;
-      &:hover {
-        cursor: pointer;
-      }
+      cursor: pointer;
+
       &:focus {
         background-color: white;
         cursor: text;
       }
     }
+
     button {
       border: 0;
       color: #263959;
@@ -63,19 +69,23 @@ li {
       border-radius: 5px;
       height: 36px;
       width: 36px;
+      cursor: pointer;
+
       img {
         height: 16px;
         opacity: 0.4;
       }
+
       &:hover {
-        cursor: pointer;
         background-color: rgba(9, 30, 66, 0.08);
+
         img {
           opacity: 0.6;
         }
       }
     }
   }
+
   &__cardlist {
     display: flex;
     flex-direction: column;

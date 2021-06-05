@@ -1,26 +1,28 @@
 .confirm {
+  position: absolute;
+  left: calc(50% - 250px);
+  bottom: 50%;
   display: flex;
   flex-direction: column;
-  align-self: center;
-  width: 280px;
+  width: 500px;
   height: fit-content;
-  padding: 8px 0;
+  background-color: rgb(248, 248, 248);
   border-radius: 5px;
-  span {
-    display: flex;
-    align-items: center;
-    background-color: rgb(248, 248, 248);
+  cursor: default;
+
+  p {
+    margin: 10px 10px 10px 15px;
     color: #5e6c84;
-    padding-left: 6px;
-    height: 28px;
     font-size: 14px;
     line-height: 24px;
     font-family: sans-serif;
-    border-radius: 5px;
-    &:hover {
-      cursor: default;
-    }
   }
+
+  span {
+    color: #0079bf;
+    font-weight: bold;
+  }
+
   &__buttons {
     background-color: rgb(248, 248, 248);
     display: flex;
@@ -29,6 +31,8 @@
     height: 36px;
     padding-bottom: 4px;
     padding-right: 8px;
+    border-radius: 5px;
+
     &__yes,
     &__cancel {
       width: 80px;
@@ -40,15 +44,18 @@
       font-size: 12px;
       line-height: 24px;
       font-family: sans-serif;
+      cursor: pointer;
+
       &:hover {
-        cursor: pointer;
         opacity: 0.8;
       }
     }
+
     &__yes {
       background-color: #5aac44;
       margin-right: 5px;
     }
+    
     &__cancel {
       background-color: #b93737;
     }
