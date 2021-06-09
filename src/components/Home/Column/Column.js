@@ -21,26 +21,27 @@ const Column = React.forwardRef(
       handleDeleteColumn,
       addNewCard,
       cardListHandler,
+      showConfirmDelete,
+      confirmDelete,
       ...props
     },
     ref,
   ) => {
     const [newCard, setNewCard] = useState('');
     const [showNewCardForm, setShowNewCardForm] = useState(false);
-    const [confirmDelete, setConfirmDelete] = useState(false);
 
-    const onClickNewCard = () => {
+    function onClickNewCard() {
       setShowNewCardForm((prevState) => !prevState);
-    };
+    }
 
-    const handleNewCardChange = (event) => {
+    function handleNewCardChange(event) {
       handleResize(event);
 
       const cardName = event.target.value;
       setNewCard(cardName);
-    };
+    }
 
-    const onSubmitNewCard = (event) => {
+    function onSubmitNewCard(event) {
       event.preventDefault();
 
       const cardsIdArray = cards.map(({ cardId }) => cardId.split('-')[0]);
@@ -54,32 +55,28 @@ const Column = React.forwardRef(
       cardListHandler(newCards, index);
       setNewCard('');
       onClickNewCard();
-    };
+    }
 
-    const taskEdit = (newTitle, taskId, cardIndex) => {
+    function taskEdit(newTitle, taskId, cardIndex) {
       const cardsCopy = [...cards];
       const edittedTask = { title: newTitle, cardId: taskId };
 
       cardsCopy[cardIndex] = edittedTask;
       cardListHandler(cardsCopy, index);
-    };
+    }
 
-    const areYouSure = () => {
-      setConfirmDelete((prevState) => !prevState);
-    };
-
-    const handleDeleteTask = (taskId) => {
+    function handleDeleteTask(taskId) {
       const cardsWithoutDeleted = cards.filter(
         ({ cardId }) => cardId !== taskId,
       );
 
       cardListHandler(cardsWithoutDeleted, index);
-    };
+    }
 
-    const deleteColumn = (columnId) => {
-      setConfirmDelete(false);
+    function deleteColumn(columnId) {
+      showConfirmDelete(0);
       handleDeleteColumn(columnId);
-    };
+    }
 
     return (
       <div>
@@ -88,7 +85,7 @@ const Column = React.forwardRef(
             <textarea onChange={(event) => handleTitleChange(event, id)}>
               {name}
             </textarea>
-            <button type="button" onClick={areYouSure}>
+            <button type="button" onClick={() => showConfirmDelete(id)}>
               <img src={icondelete} alt="delete" />
             </button>
           </div>
@@ -124,13 +121,12 @@ const Column = React.forwardRef(
             onClick={onClickNewCard}
           />
         </div>
-        {confirmDelete && (
+        {confirmDelete === id && (
           <Confirm
-            isColumn
             id={id}
             name={name}
             onClickConfirm={deleteColumn}
-            onClickCancel={areYouSure}
+            onClickCancel={showConfirmDelete}
           />
         )}
       </div>

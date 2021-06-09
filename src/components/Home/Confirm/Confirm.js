@@ -4,7 +4,11 @@ const Confirm = ({ id, name, onClickConfirm, onClickCancel }) => {
   return (
     <div className="confirm">
       <p>
-        Do you want to delete the <span>{name}</span> column?
+        Do you want to delete the{' '}
+        <span>
+          {name} - {id}
+        </span>{' '}
+        column?
       </p>
       <div className="confirm__buttons">
         <button
@@ -17,7 +21,7 @@ const Confirm = ({ id, name, onClickConfirm, onClickCancel }) => {
         <button
           type="button"
           className="confirm__buttons__cancel"
-          onClick={onClickCancel}
+          onClick={() => onClickCancel(0)}
         >
           Cancel
         </button>

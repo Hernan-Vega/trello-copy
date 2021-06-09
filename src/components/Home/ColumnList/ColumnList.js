@@ -14,15 +14,16 @@ const ColumnList = () => {
   const [columns, setColumns] = useState([]);
   const [showNewListForm, setShowNewListForm] = useState(false);
   const [newList, setNewList] = useState('');
+  const [confirmDelete, setConfirmDelete] = useState(0);
 
-  const handleResize = (event) => {
+  function handleResize(event) {
     event.target.style.height = '';
     event.target.style.height = `calc(${event.target.scrollHeight}px - 4px)`;
-  };
+  }
 
-  const onClickNewColumn = () => {
+  function onClickNewColumn() {
     setShowNewListForm((prevState) => !prevState);
-  };
+  }
 
   const handleNewListChange = (event) => {
     handleResize(event);
@@ -31,7 +32,7 @@ const ColumnList = () => {
     setNewList(name);
   };
 
-  const onSubmitNewColumn = (event) => {
+  function onSubmitNewColumn(event) {
     event.preventDefault();
 
     const columnsId = columns.map(({ id }) => id);
@@ -40,9 +41,9 @@ const ColumnList = () => {
     setColumns([...columns, { name: newList, id: newId, cards: [] }]);
     setNewList('');
     onClickNewColumn();
-  };
+  }
 
-  const handleTitleChange = (event, titleId) => {
+  function handleTitleChange(event, titleId) {
     handleResize(event);
 
     const copyColumns = [...columns];
@@ -51,21 +52,29 @@ const ColumnList = () => {
     const newTitle = event.target.value;
     copyColumns[index].name = newTitle;
     setColumns([...copyColumns]);
-  };
+  }
 
-  const handleDeleteColumn = (buttonId) => {
+  function handleDeleteColumn(buttonId) {
     setColumns(columns.filter(({ id }) => id !== buttonId));
-  };
+  }
 
-  const cardListHandler = (newCards, columnIndex) => {
+  function cardListHandler(newCards, columnIndex) {
     const copyColumns = [...columns];
     const columnCard = copyColumns[columnIndex];
 
     columnCard.cards = newCards;
     setColumns([...copyColumns]);
-  };
+  }
 
-  const onDragEnd = (result) => {
+  function showConfirmDelete(columnId) {
+    if (columnId !== 0) {
+      setConfirmDelete(columnId);
+    } else {
+      setConfirmDelete(0);
+    }
+  }
+
+  function onDragEnd(result) {
     const { source, destination } = result;
 
     if (!destination) {
@@ -88,7 +97,7 @@ const ColumnList = () => {
       newColumns[dInd].cards = newResult[dInd];
       setColumns(newColumns);
     }
-  };
+  }
 
   return (
     <div className="column-list">
@@ -106,6 +115,8 @@ const ColumnList = () => {
                 handleTitleChange={handleTitleChange}
                 handleDeleteColumn={handleDeleteColumn}
                 cardListHandler={cardListHandler}
+                showConfirmDelete={showConfirmDelete}
+                confirmDelete={confirmDelete}
                 ref={provided.innerRef}
                 style={getListStyle(snapshot.isDraggingOver)}
                 {...provided.droppableProps}

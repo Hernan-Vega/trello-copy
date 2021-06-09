@@ -22,25 +22,25 @@ const Card = React.forwardRef(
   ) => {
     const [isEditing, setIsEditing] = useState(false);
 
-    const submitCardChange = (event) => {
+    function submitCardChange(event) {
       event.preventDefault();
       onClickCardChange();
-    };
+    }
 
-    const onClickCardChange = () => {
+    function onClickCardChange() {
       setIsEditing((prevState) => !prevState);
-    };
+    }
 
-    const handleCardEdit = (event) => {
+    function handleCardEdit(event) {
       handleResize(event);
 
       const newTitle = event.target.value;
       taskEdit(newTitle, cardId, cardIndex);
-    };
+    }
 
-    const deleteTask = (id) => {
+    function deleteTask(id) {
       handleDeleteTask(id);
-    };
+    }
 
     return (
       <li key={cardId} id={cardId} ref={ref} {...props}>
